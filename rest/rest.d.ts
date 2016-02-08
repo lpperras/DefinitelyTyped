@@ -1,4 +1,4 @@
-// Type definitions for rest.js v1.2.0
+// Type definitions for rest.js v1.3.1
 // Project: https://github.com/cujojs/rest
 // Definitions by: Wim Looman <https://github.com/Nemo157>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
@@ -14,6 +14,10 @@ declare module "rest" {
 	function rest(request: rest.Request): rest.ResponsePromise;
 
 	module rest {
+		export function setDefaultClient(client: Client): void;
+		export function getDefaultClient(): Client;
+		export function resetDefaultClient(): void;
+
 		export function wrap<T>(interceptor: Interceptor<T>, config?: T): Client;
 
 		export interface Request {
@@ -251,6 +255,23 @@ declare module "rest/interceptor/retry" {
 	export = retry;
 }
 
+declare module "rest/interceptor/template" {
+	import rest = require("rest");
+
+	var template: rest.Interceptor<template.Config>;
+
+	module template {
+		interface Config {
+			template?: string;
+			params?: {
+				[name: string]: any;
+			};
+		}
+	}
+
+	export = template;
+}
+
 declare module "rest/interceptor/timeout" {
 	import rest = require("rest");
 
@@ -318,4 +339,28 @@ declare module "rest/mime/registry" {
 	}
 
 	export = registry;
+}
+
+declare module "rest/client/xhr" {
+	import rest = require("rest");
+	var xhr: rest.Client;
+	export = xhr;
+}
+
+declare module "rest/client/node" {
+	import rest = require("rest");
+	var node: rest.Client;
+	export = node;
+}
+
+declare module "rest/client/jsonp" {
+	import rest = require("rest");
+	var jsonp: rest.Client;
+	export = jsonp;
+}
+
+declare module "rest/client/xdr" {
+	import rest = require("rest");
+	var xdr: rest.Client;
+	export = xdr;
 }
